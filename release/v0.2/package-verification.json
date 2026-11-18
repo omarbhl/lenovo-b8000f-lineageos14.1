@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "checks": [
+    "no duplicate entries",
+    "ZIP CRC integrity",
+    "no private keys or device partition backups",
+    "boot.img packaged image hash",
+    "system.img packaged image hash",
+    "current manifest",
+    "current installer",
+    "only intended extraction targets",
+    "installer operation allowlist",
+    "documentation included",
+    "source records included",
+    "external ZIP checksum",
+    "signature verified"
+  ],
+  "zipSha256": "d09d865343d68cd46643873d809ecf73ba1af1a27274bf7286e576dc7e9fcbdc",
+  "zipBytes": 438304840,
+  "recoveryInstallTested": false,
+  "productionReady": false,
+  "remaining": [
+    "Test this exact ZIP through recovery, including clean install and reinstall.",
+    "Verify public ADB authorization/defaults on clean userdata.",
+    "Complete manual hardware/endurance checklist.",
+    "Resolve security limitations, licenses and complete corresponding source before public distribution."
+  ]
+}

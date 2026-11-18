@@ -1,0 +1,5 @@
+/emmc@android /system ext4 defaults defaults
+/emmc@usrdata /data ext4 defaults defaults
+/emmc@cache /cache ext4 defaults defaults
+/dev/bootimg /boot emmc defaults defaults
+/dev/recovery /recovery emmc defaults defaults

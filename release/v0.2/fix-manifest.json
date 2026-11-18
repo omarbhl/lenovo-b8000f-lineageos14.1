@@ -1,0 +1,106 @@
+{
+  "version": "0.2-experimental",
+  "files": [
+    {
+      "path": "lib/lib3a.so",
+      "sha256": "5b387905d4c017258fe49075f9e5c8a1a2330fcf6bd9b24750021d2179998312",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcam.camadapter.so",
+      "sha256": "970959c600f93d33e822455b685d8ed56aab4299671a410f1bc33da9f42cb1a8",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcam.campipe.so",
+      "sha256": "bc32584fe5179496ba6aaf91a82b2bfc04ce16742fdd8f66cdf1aaff9843ff43",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcam.camshot.so",
+      "sha256": "5c328b50b5204d24696df1381924e6fd8f4b4a1576bc697d234bc400cee86f90",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcam.client.so",
+      "sha256": "ee07fcee036ecb616bced3880712e4b879b2cf4632232864238b9dd1a130d9ca",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcam.paramsmgr.so",
+      "sha256": "2b44092458fb27fe47becb976cd69630643a35789a73a187b1bb2732a519933f",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcam.utils.so",
+      "sha256": "a1003723908700d682935a644796f5423d0af14deeeccb80d5427c5289194c77",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcamalgo.so",
+      "sha256": "4459182cb64954bb6fcd7a45b27e474afdc65af00171d2c05b4d5383a1e1f3c9",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcamdrv.so",
+      "sha256": "b5ae59342c48f4cf30413c392e0c4d40bbfbf452cad7192d9cc1a1fa04bda238",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcameracustom.so",
+      "sha256": "97992ffcd62007f45f9fa06442dc3a80dbf8a6974eb96c94c9728f24084a1805",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libcam_camera_exif.so",
+      "sha256": "4df63234bbb6ff8f446d38f29d85f3aca078cee2f6ea60e672edec9d5e60587b",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/libfeatureio.so",
+      "sha256": "dd5464ba26b9b994a189a2568530394a4a387e5b1f0946e6e0a8612f6648a30b",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/hw/sensors.default.so",
+      "sha256": "aa6c138752f464ee296e9edff8dfc6872ef4d15ce7029ecdb5d7a8739add1a26",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/hw/sensors.b8000-stock.so",
+      "sha256": "52123876a896ada04372c70a57f94eb8fe25460228df5c9d1250d0cebf984eac",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/hw/camera.default.so",
+      "sha256": "0b80dfdc7e5a246ec53c5fb3c2e029ed93fbfed40d317d84b067960301d547ab",
+      "mode": "0100644"
+    },
+    {
+      "path": "lib/hw/camera.b8000-original.so",
+      "sha256": "9d8c2d79e330c241cddded0e2b719121f5f0e6b390c0af0df2c1d453cf5048d3",
+      "mode": "0100644"
+    },
+    {
+      "path": "bin/installd",
+      "sha256": "7345afc867304b6598e62e9243a68b0bbe9f62ac99ccf8b941e50cc3ee4853e3",
+      "mode": "0100755"
+    },
+    {
+      "path": "app/OpenCamera/OpenCamera.apk",
+      "sha256": "ca5672ca8c7174554ca0b07b5b26e505817a05142f571cf2abe67e790c30249c",
+      "mode": "0100644"
+    },
+    {
+      "path": "build.prop",
+      "sha256": "abdec4eaafba7966cb8ac20f05ad2f9b51448974d96658d7408195be79b940c2",
+      "mode": "0100644"
+    }
+  ],
+  "images": {
+    "boot.img": "1da5554bed10363dd2a025c028039df84653d728ea771caacd50e979e3c4f65c",
+    "system.img": "8aa89398507440fcb559ecb0a761d85022ff18cd01cda6cf58d93c6ce7cb846e"
+  },
+  "security": "No pretrusted ADB key; root ADB off by default. Legacy kernel lacks SELinux. Not a production security claim.",
+  "runtime": "Individual fixes confirmed on tablet. Newly assembled ZIP not yet recovery-install tested."
+}

@@ -1,0 +1,382 @@
+diff --git a/init/Android.mk b/init/Android.mk
+index 0f5fe1c..09f6028 100644
+--- a/init/Android.mk
++++ b/init/Android.mk
+@@ -10,6 +10,17 @@ else
+ init_options += -DALLOW_LOCAL_PROP_OVERRIDE=0 -DALLOW_PERMISSIVE_SELINUX=0
+ endif
+ 
++# Explicit experimental legacy target only. Never enabled on another device or a user build.
++ifeq ($(B8000_LEGACY_NO_SELINUX),true)
++ifeq (,$(filter b8000 b8000_init,$(TARGET_DEVICE)))
++$(error B8000_LEGACY_NO_SELINUX is restricted to b8000/b8000_init)
++endif
++ifeq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
++$(error The legacy no-SELinux init is restricted to userdebug/eng)
++endif
++init_options += -DB8000_LEGACY_NO_SELINUX=1
++endif
++
+ init_options += -DLOG_UEVENTS=0
+ 
+ ifneq ($(TARGET_INIT_COLDBOOT_TIMEOUT),)
+diff --git a/init/devices.cpp b/init/devices.cpp
+index 29397b1..def3605 100644
+--- a/init/devices.cpp
++++ b/init/devices.cpp
+@@ -48,6 +48,7 @@
+ #include "ueventd_parser.h"
+ #include "util.h"
+ #include "log.h"
++#include "legacy_no_selinux.h"
+ #include "property_service.h"
+ 
+ #define SYSFS_PREFIX    "/sys"
+@@ -245,12 +246,14 @@ static void make_device(const char *path,
+ 
+     mode = get_device_perm(path, links, &uid, &gid) | (block ? S_IFBLK : S_IFCHR);
+ 
+-    if (selabel_lookup_best_match(sehandle, &secontext, path, links, mode)) {
+-        ERROR("Device '%s' not created; cannot find SELinux label (%s)\n",
+-                path, strerror(errno));
+-        return;
++    if (!LegacyNoSelinux()) {
++        if (selabel_lookup_best_match(sehandle, &secontext, path, links, mode)) {
++            ERROR("Device '%s' not created; cannot find SELinux label (%s)\n",
++                    path, strerror(errno));
++            return;
++        }
++        setfscreatecon(secontext);
+     }
+-    setfscreatecon(secontext);
+ 
+     dev = makedev(major, minor);
+     /* Temporarily change egid to avoid race condition setting the gid of the
+@@ -262,7 +265,7 @@ static void make_device(const char *path,
+     /* If the node already exists update its SELinux label to handle cases when
+      * it was created with the wrong context during coldboot procedure. */
+     if (mknod(path, mode, dev) && (errno == EEXIST)) {
+-        if (lsetfilecon(path, secontext)) {
++        if (!LegacyNoSelinux() && lsetfilecon(path, secontext)) {
+             ERROR("Cannot set '%s' SELinux label on '%s' device (%s)\n",
+                     secontext, path, strerror(errno));
+         }
+@@ -271,7 +274,7 @@ static void make_device(const char *path,
+     setegid(AID_ROOT);
+ 
+     freecon(secontext);
+-    setfscreatecon(NULL);
++    if (!LegacyNoSelinux()) setfscreatecon(NULL);
+ }
+ 
+ static void add_platform_device(const char *path)
+@@ -1028,7 +1031,7 @@ void handle_device_fd()
+         struct uevent uevent;
+         parse_event(msg, &uevent);
+ 
+-        if (selinux_status_updated() > 0) {
++        if (!LegacyNoSelinux() && selinux_status_updated() > 0) {
+             struct selabel_handle *sehandle2;
+             sehandle2 = selinux_android_file_context_handle();
+             if (sehandle2) {
+@@ -1095,8 +1098,10 @@ static void coldboot(const char *path)
+ }
+ 
+ void device_init() {
+-    sehandle = selinux_android_file_context_handle();
+-    selinux_status_open(true);
++    if (!LegacyNoSelinux()) {
++        sehandle = selinux_android_file_context_handle();
++        selinux_status_open(true);
++    }
+ 
+     /* is 256K enough? udev uses 16MB! */
+     device_fd = uevent_open_socket(256*1024, true);
+diff --git a/init/init.cpp b/init/init.cpp
+index 7a37059..05b483a 100755
+--- a/init/init.cpp
++++ b/init/init.cpp
+@@ -57,6 +57,7 @@
+ #include "devices.h"
+ #include "import_parser.h"
+ #include "init.h"
++#include "legacy_no_selinux.h"
+ #include "init_parser.h"
+ #include "keychords.h"
+ #include "log.h"
+@@ -435,6 +436,7 @@ static int queue_property_triggers_action(const std::vector<std::string>& args)
+ 
+ static void selinux_init_all_handles(void)
+ {
++    if (LegacyNoSelinux()) return;
+     sehandle = selinux_android_file_context_handle();
+     selinux_android_set_sehandle(sehandle);
+     sehandle_prop = selinux_android_prop_context_handle();
+@@ -464,6 +466,7 @@ static bool selinux_is_enforcing(void)
+ 
+ int selinux_reload_policy(void)
+ {
++    if (LegacyNoSelinux()) return 0;
+     INFO("SELinux: Attempting to reload policy files\n");
+ 
+     if (selinux_android_reload_policy() == -1) {
+@@ -501,6 +504,10 @@ static void security_failure() {
+ }
+ 
+ static void selinux_initialize(bool in_kernel_domain) {
++    if (LegacyNoSelinux()) {
++        NOTICE("B8000 legacy bring-up: kernel SELinux is intentionally disabled\n");
++        return;
++    }
+     Timer t;
+ 
+     selinux_callback cb;
+@@ -608,6 +615,11 @@ int main(int argc, char** argv) {
+ 
+         // Propagate the kernel variables to internal variables
+         // used by init as well as the current required properties.
++        // Old Lenovo LK ignores androidboot.hardware in the boot header.
++        // This fallback is restricted to our explicitly opted-in legacy build.
++        if (LegacyNoSelinux() && property_get("ro.boot.hardware").empty()) {
++            property_set("ro.boot.hardware", "mt8389");
++        }
+         export_kernel_boot_props();
+     }
+ 
+diff --git a/init/property_service.cpp b/init/property_service.cpp
+index fc14796..b3a9cb4 100644
+--- a/init/property_service.cpp
++++ b/init/property_service.cpp
+@@ -53,6 +53,7 @@
+ 
+ #include "property_service.h"
+ #include "init.h"
++#include "legacy_no_selinux.h"
+ #include "util.h"
+ #include "log.h"
+ #include "vendor_init.h"
+@@ -66,14 +67,99 @@ static int persistent_properties_loaded = 0;
+ static int property_set_fd = -1;
+ 
+ void property_init() {
+-    if (__system_property_area_init()) {
++    int rc = __system_property_area_init();
++    // Bionic distinguishes valid areas with failed SELinux xattrs (-2) from
++    // actual mapping/open errors (-1). Only the explicit legacy target may
++    // continue after the label-only failure on a kernel with no SELinux.
++    if (rc != 0 && !(LegacyNoSelinux() && rc == -2)) {
+         ERROR("Failed to initialize property area\n");
+         exit(1);
+     }
+ }
+ 
++/* White list of permissions for setting property services. */
++struct {
++    const char *prefix;
++    unsigned int uid;
++    unsigned int gid;
++} legacy_property_perms[] = {
++    { "net.rmnet0.",      AID_RADIO,    0 },
++    { "net.gprs.",        AID_RADIO,    0 },
++    { "net.ppp",          AID_RADIO,    0 },
++    { "net.qmi",          AID_RADIO,    0 },
++    { "net.lte",          AID_RADIO,    0 },
++    { "net.cdma",         AID_RADIO,    0 },
++    { "ril.",             AID_RADIO,    0 },
++    { "gsm.",             AID_RADIO,    0 },
++    { "persist.radio",    AID_RADIO,    0 },
++    { "net.dns",          AID_RADIO,    0 },
++    { "sys.usb.config",   AID_RADIO,    0 },
++    { "net.",             AID_SYSTEM,   0 },
++    { "dev.",             AID_SYSTEM,   0 },
++    { "runtime.",         AID_SYSTEM,   0 },
++    { "hw.",              AID_SYSTEM,   0 },
++    { "sys.",             AID_SYSTEM,   0 },
++    { "service.",         AID_SYSTEM,   0 },
++    { "wlan.",            AID_SYSTEM,   0 },
++    { "bluetooth.",       AID_BLUETOOTH,   0 },
++    { "dhcp.",            AID_SYSTEM,   0 },
++    { "dhcp.",            AID_DHCP,     0 },
++    { "debug.",           AID_SYSTEM,   0 },
++    { "debug.",           AID_SHELL,    0 },
++    { "log.",             AID_SHELL,    0 },
++    { "service.adb.root", AID_SHELL,    0 },
++    { "service.adb.tcp.port", AID_SHELL,    0 },
++    { "persist.sys.",     AID_SYSTEM,   0 },
++    { "persist.service.", AID_SYSTEM,   0 },
++    { "persist.security.", AID_SYSTEM,   0 },
++    { "persist.service.bdroid.", AID_BLUETOOTH,   0 },
++    { "selinux."         , AID_SYSTEM,   0 },
++    { NULL, 0, 0 }
++};
++
++/*
++ * White list of UID that are allowed to start/stop services.
++ * Currently there are no user apps that require.
++ */
++struct {
++    const char *service;
++    unsigned int uid;
++    unsigned int gid;
++} legacy_control_perms[] = {
++    { "dumpstate",AID_SHELL, AID_LOG },
++    { "ril-daemon",AID_RADIO, AID_RADIO },
++     {NULL, 0, 0 }
++};
++
++
++static int legacy_property_allowed(const char* name, const struct ucred* cr) {
++    if (!cr) return 0;
++    // Lineage adbd uses this exact spelling, unlike AOSP service.adb.root.
++    if (cr->uid == AID_SHELL && !strcmp(name, "cm.service.adb.root")) return 1;
++    if (!strncmp(name, "ro.", 3)) name += 3;
++    if (cr->uid == AID_ROOT) return 1;
++    for (size_t i = 0; legacy_property_perms[i].prefix; ++i) {
++        const auto& rule = legacy_property_perms[i];
++        if (!strncmp(rule.prefix, name, strlen(rule.prefix)) &&
++            ((cr->uid && rule.uid == cr->uid) || (cr->gid && rule.gid == cr->gid))) return 1;
++    }
++    return 0;
++}
++
++static int legacy_control_allowed(const char* name, const struct ucred* cr) {
++    if (!cr) return 0;
++    if (cr->uid == AID_ROOT || cr->uid == AID_SYSTEM) return 1;
++    for (size_t i = 0; legacy_control_perms[i].service; ++i) {
++        const auto& rule = legacy_control_perms[i];
++        if (!strcmp(rule.service, name) &&
++            ((cr->uid && rule.uid == cr->uid) || (cr->gid && rule.gid == cr->gid))) return 1;
++    }
++    return 0;
++}
++
+ static int check_mac_perms(const char *name, char *sctx, struct ucred *cr)
+ {
++    if (LegacyNoSelinux()) return legacy_property_allowed(name, cr);
+     char *tctx = NULL;
+     int result = 0;
+     property_audit_data audit_data;
+@@ -100,6 +186,7 @@ static int check_mac_perms(const char *name, char *sctx, struct ucred *cr)
+ 
+ static int check_control_mac_perms(const char *name, char *sctx, struct ucred *cr)
+ {
++    if (LegacyNoSelinux()) return legacy_control_allowed(name, cr);
+     /*
+      *  Create a name prefix out of ctl.<service name>
+      *  The new prefix allows the use of the existing
+@@ -405,7 +492,7 @@ static void handle_property_set_fd()
+             return;
+         }
+ 
+-        getpeercon(s, &source_ctx);
++        if (!LegacyNoSelinux()) getpeercon(s, &source_ctx);
+ 
+         if(memcmp(msg.name,"ctl.",4) == 0) {
+             // Keep the old close-socket-early behavior when handling
+diff --git a/init/service.cpp b/init/service.cpp
+index a5334f4..81de816 100644
+--- a/init/service.cpp
++++ b/init/service.cpp
+@@ -32,6 +32,7 @@
+ 
+ #include "action.h"
+ #include "init.h"
++#include "legacy_no_selinux.h"
+ #include "init_parser.h"
+ #include "log.h"
+ #include "property_service.h"
+@@ -344,7 +345,9 @@ bool Service::Start() {
+     }
+ 
+     std::string scon;
+-    if (!seclabel_.empty()) {
++    if (LegacyNoSelinux()) {
++        scon.clear();
++    } else if (!seclabel_.empty()) {
+         scon = seclabel_;
+     } else {
+         char* mycon = nullptr;
+@@ -401,8 +404,8 @@ bool Service::Start() {
+             int socket_type = ((si.type == "stream" ? SOCK_STREAM :
+                                 (si.type == "dgram" ? SOCK_DGRAM :
+                                  SOCK_SEQPACKET)));
+-            const char* socketcon =
+-                !si.socketcon.empty() ? si.socketcon.c_str() : scon.c_str();
++            const char* socketcon = LegacyNoSelinux() ? nullptr :
++                (!si.socketcon.empty() ? si.socketcon.c_str() : scon.c_str());
+ 
+             int s = create_socket(si.name.c_str(), socket_type, si.perm,
+                                   si.uid, si.gid, socketcon);
+@@ -454,7 +457,7 @@ bool Service::Start() {
+                 _exit(127);
+             }
+         }
+-        if (!seclabel_.empty()) {
++        if (!LegacyNoSelinux() && !seclabel_.empty()) {
+             if (setexeccon(seclabel_.c_str()) < 0) {
+                 ERROR("cannot setexeccon('%s'): %s\n",
+                       seclabel_.c_str(), strerror(errno));
+diff --git a/init/util.cpp b/init/util.cpp
+index 193b783..db88f10 100755
+--- a/init/util.cpp
++++ b/init/util.cpp
+@@ -42,6 +42,7 @@
+ #include <private/android_filesystem_config.h>
+ 
+ #include "init.h"
++#include "legacy_no_selinux.h"
+ #include "log.h"
+ #include "property_service.h"
+ #include "util.h"
+@@ -105,7 +106,7 @@ int create_socket(const char *name, int type, mode_t perm, uid_t uid,
+     int fd, ret, savederrno;
+     char *filecon;
+ 
+-    if (socketcon) {
++    if (socketcon && !LegacyNoSelinux()) {
+         if (setsockcreatecon(socketcon) == -1) {
+             ERROR("setsockcreatecon(\"%s\") failed: %s\n", socketcon, strerror(errno));
+             return -1;
+@@ -118,7 +119,7 @@ int create_socket(const char *name, int type, mode_t perm, uid_t uid,
+         return -1;
+     }
+ 
+-    if (socketcon)
++    if (socketcon && !LegacyNoSelinux())
+         setsockcreatecon(NULL);
+ 
+     memset(&addr, 0 , sizeof(addr));
+@@ -142,7 +143,7 @@ int create_socket(const char *name, int type, mode_t perm, uid_t uid,
+     ret = bind(fd, (struct sockaddr *) &addr, sizeof (addr));
+     savederrno = errno;
+ 
+-    setfscreatecon(NULL);
++    if (!LegacyNoSelinux()) setfscreatecon(NULL);
+     freecon(filecon);
+ 
+     if (ret) {
+@@ -469,7 +470,7 @@ int make_dir(const char *path, mode_t mode)
+     if (secontext) {
+         int save_errno = errno;
+         freecon(secontext);
+-        setfscreatecon(NULL);
++        if (!LegacyNoSelinux()) setfscreatecon(NULL);
+         errno = save_errno;
+     }
+ 
+diff --git a/init/legacy_no_selinux.h b/init/legacy_no_selinux.h
+new file mode 100644
+index 0000000..2273be2
+--- /dev/null
++++ b/init/legacy_no_selinux.h
+@@ -0,0 +1,10 @@
++// Experimental B8000-F stock-kernel bring-up only; not a permissive-SELinux switch.
++#pragma once
++
++static inline bool LegacyNoSelinux() {
++#if defined(B8000_LEGACY_NO_SELINUX) && B8000_LEGACY_NO_SELINUX
++    return true;
++#else
++    return false;
++#endif
++}

@@ -1,0 +1,43 @@
+--- a/cmds/installd/Android.mk
++++ b/cmds/installd/Android.mk
+@@ -2,6 +2,17 @@
+ 
+ common_src_files := commands.cpp globals.cpp utils.cpp
+ common_cflags := -Wall -Werror
++
++# Unsupported B8000 stock-kernel experiment only; leave all other targets intact.
++ifeq ($(B8000_LEGACY_NO_SELINUX),true)
++ifeq (,$(filter b8000 b8000_init,$(TARGET_DEVICE)))
++$(error B8000_LEGACY_NO_SELINUX is restricted to b8000/b8000_init)
++endif
++ifeq (,$(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
++$(error B8000_LEGACY_NO_SELINUX requires userdebug/eng)
++endif
++common_cflags += -DB8000_LEGACY_NO_SELINUX=1
++endif
+ 
+ #
+ # Static library used in testing and executable
+--- a/cmds/installd/commands.cpp
++++ b/cmds/installd/commands.cpp
+@@ -40,6 +40,7 @@
+ #include <logwrap/logwrap.h>
+ #include <private/android_filesystem_config.h>
+ #include <selinux/android.h>
++#include <selinux/selinux.h>
+ #include <system/thread_defs.h>
+ 
+ #include <globals.h>
+@@ -105,6 +106,12 @@
+  * significant time by avoiding no-op traversals of large filesystem trees.
+  */
+ static int restorecon_app_data_lazy(const std::string& path, const char* seinfo, uid_t uid) {
++#if defined(B8000_LEGACY_NO_SELINUX) && B8000_LEGACY_NO_SELINUX
++    // With no kernel SELinux there are no security.selinux labels to compare.
++    // Match libselinux's genuine disabled-kernel restorecon semantics; keep
++    // directory creation, uid/mode checks and other xattr operations intact.
++    if (is_selinux_enabled() <= 0) return 0;
++#endif
+     int res = 0;
+     char* before = nullptr;
+     char* after = nullptr;

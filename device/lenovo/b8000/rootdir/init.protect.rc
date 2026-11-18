@@ -1,0 +1,10 @@
+# Mounting occurs once in fstab.mt6589. Preserve the tablet's own calibration.
+on early-init
+    mkdir /protect_f 0771 system system
+    mkdir /protect_s 0771 system system
+
+on post-fs-data
+    chown system system /protect_f
+    chmod 0771 /protect_f
+    chown system system /protect_s
+    chmod 0771 /protect_s
