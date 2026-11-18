@@ -1,4 +1,4 @@
-# v0.2 experimental — private validation draft
+# v0.2 experimental prerelease
 
 **FLASH AT YOUR OWN RISK.** Provided AS IS with no warranty or guarantee. You
 accept the risk of device damage/bricking, data loss and loss of functionality.
@@ -25,6 +25,6 @@ Firmware: B8000F-Android7.1.2-v0.2-EXPERIMENTAL.zip
 SHA256: d09d865343d68cd46643873d809ecf73ba1af1a27274bf7286e576dc7e9fcbdc
 
 Only B8000-F Wi-Fi is supported. This obsolete Android/no-SELinux platform is not
-production-secure. Keep the draft private while testing and redistribution/source
-requirements remain unresolved. Do not upload this tablet's stock rollback image
-or inspection/backups as release assets.
+production-secure. Testing and redistribution/corresponding-source requirements
+remain unresolved; public availability does not establish that those gates passed.
+Do not upload this tablet's stock rollback image or inspection/backups as assets.

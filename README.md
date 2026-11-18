@@ -39,9 +39,11 @@ or other losses arising from its installation or use, to the fullest extent
 permitted by applicable law.** Back up your data and keep recovery/rollback files
 before flashing. No compatibility, reliability or security guarantee is made.
 
-Firmware belongs in **GitHub Releases**, not Git history. While this repository
-is private, v0.2 is kept as a draft release for the owner's validation. Do not
-publish or mirror it until the source/license and testing gates are resolved.
+Firmware is available in [GitHub Releases](https://github.com/omarbhl/lenovo-b8000f-lineageos14.1/releases/tag/v0.2-experimental),
+as an **experimental prerelease**, not a production-ready ROM. The exact ZIP's
+clean-install/reinstall tests and the documented source/license gates remain
+unresolved. Public availability does not establish testing completion or grant
+redistribution rights over third-party components.
 
 - [Installation and limitations](docs/INSTALLATION.md)
 - [Manual release checklist](docs/MANUAL-TEST-CHECKLIST.md)

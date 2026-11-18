@@ -10,8 +10,7 @@ private maintainer signing identity or earlier project output is needed.
 Use Ubuntu20.04 x86_64 or WSL2 with Java8 and Python2 for the legacy Android build,
 Python3 for image tools, and at least 15GB free. Build in the Linux filesystem.
 Install the packages and Google repo launcher listed in
-[DEPENDENCIES.md](DEPENDENCIES.md). Clone this repository; while private,
-contributors need access:
+[DEPENDENCIES.md](DEPENDENCIES.md). Clone this public repository:
 
 ```sh
 git clone https://github.com/omarbhl/lenovo-b8000f-lineageos14.1.git

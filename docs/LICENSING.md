@@ -1,6 +1,6 @@
 # Licensing and redistribution status
 
-This private draft does not establish permission to redistribute the firmware.
+This repository does not establish permission to redistribute the firmware.
 There is no blanket license grant over this collection. Existing upstream
 copyright headers and license obligations remain applicable; a maintainer must
 choose and document terms for original contributions before a public release.
