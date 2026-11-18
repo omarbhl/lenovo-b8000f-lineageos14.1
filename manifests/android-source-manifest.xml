@@ -2,9 +2,8 @@
 <manifest>
   <remote name="TeamWin" fetch="https://github.com/TeamWin" review="https://gerrit.twrp.me"/>
   <remote name="aosp" fetch="https://android.googlesource.com" review="android-review.googlesource.com" revision="refs/tags/android-7.1.2_r29"/>
-  <remote name="github" fetch=".." review="review.lineageos.org"/>
+  <remote name="github" fetch="https://github.com" review="review.lineageos.org"/>
   <remote name="omnirom" fetch="https://github.com/omnirom" review="https://gerrit.omnirom.org"/>
-  <remote name="private" fetch="ssh://git@github.com"/>
 
   <default remote="github" revision="refs/heads/cm-14.1" sync-j="4" sync-c="true"/>
 

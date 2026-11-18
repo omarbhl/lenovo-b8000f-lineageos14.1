@@ -1,9 +1,11 @@
 # Lenovo B8000-F — LineageOS 14.1 experimental port
 
 Android 7.1.2 / API 25 for the **Lenovo Yoga Tablet 10 B8000-F Wi-Fi**.
-This repository records the hardware adaptations, source patches, and tests for
-a donor-based port. It is not an official Lenovo or LineageOS release, a complete
-Android source tree, or a reproducible build of every component.
+This repository contains a portable build workflow, hardware adaptations, source
+patches and tests for a donor-based port. Contributors can assemble the ROM from
+documented external firmware and locally compiled compatibility code. It is not
+an official Lenovo/LineageOS release or a full source rebuild of every Android
+component or the exact stock kernel.
 
 ## Status
 
@@ -45,6 +47,9 @@ publish or mirror it until the source/license and testing gates are resolved.
 - [Manual release checklist](docs/MANUAL-TEST-CHECKLIST.md)
 - [Known issues and release gates](docs/KNOWN-ISSUES.md)
 - [Source and build notes](docs/BUILDING.md)
+- [Pinned source and firmware links](docs/SOURCES.md)
+- [Build host dependencies](docs/DEPENDENCIES.md)
+- [Contributor build verification results](docs/BUILD-VERIFICATION.md)
 - [Licensing and redistribution](docs/LICENSING.md)
 - [v0.2 checksums](release/v0.2/SHA256SUMS.txt)
 
@@ -62,7 +67,8 @@ Read the installation document before flashing.
 | `patches` | Init/property-service and installd compatibility changes |
 | `device` | B8000 configuration, startup rules and persistent device permissions |
 | `manifests` | Pinned Android component source manifest used during development |
-| `development` | Historical packaging/verification scripts requiring local inputs |
+| `scripts` | Portable source fetch, input preparation, build, signing and verification |
+| `config` | Hash-locked hardware files, app downloads and build properties |
 | `release/v0.2` | Checksums, fix inventory and offline validation reports |
 
 No private signing keys, device backups, NVRAM/calibration partitions, photos,

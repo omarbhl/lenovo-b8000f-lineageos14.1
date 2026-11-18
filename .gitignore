@@ -31,6 +31,13 @@ auth/
 downloads/
 out/
 build/
+inputs/
+work/
+keys/
+components/
+android/
+*.partial
+*.jar
 __pycache__/
 *.pyc
 .DS_Store

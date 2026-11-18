@@ -1,0 +1,457 @@
+{
+  "schema": 1,
+  "donor": {
+    "filename": "lineage-14.1-20220911-UNOFFICIAL-me173x.zip",
+    "url": "https://androidfilehost.com/?fid=14871746926876822197",
+    "sha256": "86639dfcff0f09919743f0e5a69bac09aa31d9b59ecaf5dba2c30a012cb353fb",
+    "publishedMd5": "9a8ba8d04ed262f6f374ff276dc764e5",
+    "bytes": 317267445
+  },
+  "stockBoot": {
+    "sha256": "98fbb44001a0353deb0c4c9f009cb4e5de8de445e5a1a9e341d39a4379888597",
+    "note": "Locally provided original B8000-F boot.img. Only the exact tested kernel baseline is supported."
+  },
+  "stockSystem": {
+    "note": "Locally provided original B8000-F ext4 system image; selected hardware files are verified individually. No userdata/NVRAM/protect image is accepted."
+  },
+  "systemPartitionBytes": 1073741824,
+  "blockBytes": 4096,
+  "overlay": [
+    {
+      "source": "donor",
+      "path": "build.prop",
+      "target": "build.prop",
+      "sha256": "445a51efa52fa1fd8e35ad27c42434626f28b7fb464e0ff7213907d91e06fc07",
+      "bytes": 3914
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/mt6628_ant_m1.cfg",
+      "target": "etc/firmware/mt6628_ant_m1.cfg",
+      "sha256": "64955411c31a02f9a6d162e1b8b4bc59040c07689ca32b4e52e474cee7c5f533",
+      "bytes": 91
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/mt6628_patch_e1_hdr.bin",
+      "target": "etc/firmware/mt6628_patch_e1_hdr.bin",
+      "sha256": "ca39ab12d92bf6122afd9ba7f0ab8558684d0c2830617d67c992e43b04be066b",
+      "bytes": 28496
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/mt6628_patch_e2_0_hdr.bin",
+      "target": "etc/firmware/mt6628_patch_e2_0_hdr.bin",
+      "sha256": "5287e83db17de9f4d75ad58b937b2ff11c46c115e956b7cca53780cd0e272a09",
+      "bytes": 5516
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/mt6628_patch_e2_1_hdr.bin",
+      "target": "etc/firmware/mt6628_patch_e2_1_hdr.bin",
+      "sha256": "1b95d797d019ae47d87336fcb5752668af96e5534dbc62738c167e9afb51d696",
+      "bytes": 40844
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/S_ANDRO_SFL.ini",
+      "target": "etc/firmware/S_ANDRO_SFL.ini",
+      "sha256": "7c330986b5743f0b79269038bfaae1f9689a30663d76b8d557ae477e8dca39e8",
+      "bytes": 417
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/WIFI_RAM_CODE",
+      "target": "etc/firmware/WIFI_RAM_CODE",
+      "sha256": "b650d5d957acce86606c0b356a9977d4ce7a7e301df75446ff9ae5fa071ba0d2",
+      "bytes": 158368
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/WIFI_RAM_CODE_E6",
+      "target": "etc/firmware/WIFI_RAM_CODE_E6",
+      "sha256": "659ce80e4cebad85549f4a227080d27870cb236ea950883d85381568ee54b781",
+      "bytes": 158864
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/WIFI_RAM_CODE_MT6628",
+      "target": "etc/firmware/WIFI_RAM_CODE_MT6628",
+      "sha256": "8dfca43601187c0f4ba6588f4c07ca128519499072f1ccb1aefbb9de8919a1bd",
+      "bytes": 157360
+    },
+    {
+      "source": "stock",
+      "path": "etc/firmware/WMT.cfg",
+      "target": "etc/firmware/WMT.cfg",
+      "sha256": "3789e9d028332f9a9c5be12ca89e06ba037b7bfd041f2922450890c1a1c67b18",
+      "bytes": 63
+    },
+    {
+      "source": "donor",
+      "path": "lib/hw/audio.primary.mt6589.so",
+      "target": "lib/hw/audio.primary.mt8389.so",
+      "sha256": "3b68cf73f89323fd1cc7af6acc781b977c85e6555e9125233cb5b4700951a700",
+      "bytes": 575840
+    },
+    {
+      "source": "donor",
+      "path": "lib/hw/camera.default.so",
+      "target": "lib/hw/camera.b8000-original.so",
+      "sha256": "9d8c2d79e330c241cddded0e2b719121f5f0e6b390c0af0df2c1d453cf5048d3",
+      "bytes": 50440
+    },
+    {
+      "source": "donor",
+      "path": "lib/hw/gps.mt6589.so",
+      "target": "lib/hw/gps.mt8389.so",
+      "sha256": "356ced9686bcb50cf0a03c905122842b41871e4840e3b72354efc3041ac3689d",
+      "bytes": 83816
+    },
+    {
+      "source": "stock",
+      "path": "lib/hw/lights.default.so",
+      "target": "lib/hw/lights.default.so",
+      "sha256": "b2056332a03c6c5447670390762309ce710596c686b835c9f6bdf4ff2598dfbf",
+      "bytes": 9496
+    },
+    {
+      "source": "stock",
+      "path": "lib/hw/sensors.default.so",
+      "target": "lib/hw/sensors.b8000-stock.so",
+      "sha256": "52123876a896ada04372c70a57f94eb8fe25460228df5c9d1250d0cebf984eac",
+      "bytes": 9664
+    },
+    {
+      "source": "stock",
+      "path": "lib/hw/sensors.default.so",
+      "target": "lib/hw/sensors.default.so",
+      "sha256": "52123876a896ada04372c70a57f94eb8fe25460228df5c9d1250d0cebf984eac",
+      "bytes": 9664
+    },
+    {
+      "source": "stock",
+      "path": "lib/lib3a.so",
+      "target": "lib/lib3a.so",
+      "sha256": "5b387905d4c017258fe49075f9e5c8a1a2330fcf6bd9b24750021d2179998312"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcam_camera_exif.so",
+      "target": "lib/libcam_camera_exif.so",
+      "sha256": "4df63234bbb6ff8f446d38f29d85f3aca078cee2f6ea60e672edec9d5e60587b"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcam.camadapter.so",
+      "target": "lib/libcam.camadapter.so",
+      "sha256": "970959c600f93d33e822455b685d8ed56aab4299671a410f1bc33da9f42cb1a8"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcam.campipe.so",
+      "target": "lib/libcam.campipe.so",
+      "sha256": "bc32584fe5179496ba6aaf91a82b2bfc04ce16742fdd8f66cdf1aaff9843ff43"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcam.camshot.so",
+      "target": "lib/libcam.camshot.so",
+      "sha256": "5c328b50b5204d24696df1381924e6fd8f4b4a1576bc697d234bc400cee86f90"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcam.client.so",
+      "target": "lib/libcam.client.so",
+      "sha256": "ee07fcee036ecb616bced3880712e4b879b2cf4632232864238b9dd1a130d9ca"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcam.paramsmgr.so",
+      "target": "lib/libcam.paramsmgr.so",
+      "sha256": "2b44092458fb27fe47becb976cd69630643a35789a73a187b1bb2732a519933f"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcam.utils.so",
+      "target": "lib/libcam.utils.so",
+      "sha256": "a1003723908700d682935a644796f5423d0af14deeeccb80d5427c5289194c77"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcamalgo.so",
+      "target": "lib/libcamalgo.so",
+      "sha256": "4459182cb64954bb6fcd7a45b27e474afdc65af00171d2c05b4d5383a1e1f3c9"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcamdrv.so",
+      "target": "lib/libcamdrv.so",
+      "sha256": "b5ae59342c48f4cf30413c392e0c4d40bbfbf452cad7192d9cc1a1fa04bda238"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcameracustom.so",
+      "target": "lib/libcameracustom.so",
+      "sha256": "97992ffcd62007f45f9fa06442dc3a80dbf8a6974eb96c94c9728f24084a1805"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libcustom_nvram.so",
+      "target": "lib/libcustom_nvram.so",
+      "sha256": "f20a57e286e056e4346596479dd905359d258d8a654e38f98af6816638337985",
+      "bytes": 39040
+    },
+    {
+      "source": "stock",
+      "path": "lib/libfeatureio.so",
+      "target": "lib/libfeatureio.so",
+      "sha256": "dd5464ba26b9b994a189a2568530394a4a387e5b1f0946e6e0a8612f6648a30b"
+    },
+    {
+      "source": "stock",
+      "path": "lib/libfile_op.so",
+      "target": "lib/libfile_op.so",
+      "sha256": "f4416bea5d9180fff35e651a857bdf992e1e59ef3e3ada3171a4181a61647091",
+      "bytes": 42076
+    },
+    {
+      "source": "stock",
+      "path": "lib/libhwm.so",
+      "target": "lib/libhwm.so",
+      "sha256": "091843a3822454ccac4d7e32d7a722b677854560edccd9382e650fe872caa5fc",
+      "bytes": 21544
+    },
+    {
+      "source": "stock",
+      "path": "lib/libnvram_daemon_callback.so",
+      "target": "lib/libnvram_daemon_callback.so",
+      "sha256": "bff1c32bb27fedd1cb993aa8d562f269b04598438b3d12275f3f34fbfc00481b",
+      "bytes": 5160
+    },
+    {
+      "source": "stock",
+      "path": "lib/libnvram.so",
+      "target": "lib/libnvram.so",
+      "sha256": "4b54c76caae5f1717c3611202d4a5489384ec5e4b78fdc125bf2242628d733d9",
+      "bytes": 42076
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/devapc.ko",
+      "target": "lib/modules/devapc.ko",
+      "sha256": "3fe7e782f24f500e5018b10854b80e6b0428073a2588012153483ecc7d49d6f3",
+      "bytes": 17616
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/devinfo.ko",
+      "target": "lib/modules/devinfo.ko",
+      "sha256": "f115fae905668f2d51b3017ddd9a48402641b399e0f7e8fc84a4ac48bbf1200d",
+      "bytes": 4440
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/hid-logitech-dj.ko",
+      "target": "lib/modules/hid-logitech-dj.ko",
+      "sha256": "85dfbbcb99baabf3145a96e4b89fdb599515bd921026e0c929f3c5e032ffdcbe",
+      "bytes": 15552
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/mtk_hif_sdio.ko",
+      "target": "lib/modules/mtk_hif_sdio.ko",
+      "sha256": "94110a0d8c7160010a173d2ebf4dc4266d2d1a6caa8f912a932ec689de65ec12",
+      "bytes": 75460
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/mtk_stp_bt.ko",
+      "target": "lib/modules/mtk_stp_bt.ko",
+      "sha256": "3a1a1b9774d272e803f34c19da83b32a0228b8c3e6c2a7e5e6c572cc0b610ead",
+      "bytes": 12648
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/mtk_stp_gps.ko",
+      "target": "lib/modules/mtk_stp_gps.ko",
+      "sha256": "d3c01cec2e455f094eae8a8bdead2023533869755afda6ed560414163a3447b5",
+      "bytes": 8984
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/mtk_stp_uart.ko",
+      "target": "lib/modules/mtk_stp_uart.ko",
+      "sha256": "83168099dfe2db0ff6dfb83d69f1240d03b774a68e401c14c43abe55e29f25ee",
+      "bytes": 10044
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/mtk_stp_wmt.ko",
+      "target": "lib/modules/mtk_stp_wmt.ko",
+      "sha256": "ac00cac02b4c63d861b7c1c1303031ccad34aff7376894baa08b9892839dc045",
+      "bytes": 325472
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/mtk_wmt_wifi.ko",
+      "target": "lib/modules/mtk_wmt_wifi.ko",
+      "sha256": "fca6ef539fcaadca1790e8cc2decdba4a681cd924cf679d22132df91edddbb02",
+      "bytes": 5468
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/mtklfb.ko",
+      "target": "lib/modules/mtklfb.ko",
+      "sha256": "1a1f7dc5c266254e5f5a75f36683edadb70d8155fbdbcdd1c0e9e4d1f13e5a50",
+      "bytes": 20784
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/pvrsrvkm.ko",
+      "target": "lib/modules/pvrsrvkm.ko",
+      "sha256": "3e3b6b2bc10aed4ba08f5e5a6917238c324a3e117b7ffa3eeb9a3a9e257e9018",
+      "bytes": 285932
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/scsi_tgt.ko",
+      "target": "lib/modules/scsi_tgt.ko",
+      "sha256": "8b13f8b547706cc46710b9f0a124962764a203f1f5a4d69e94bb31119409f7ba",
+      "bytes": 15428
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/scsi_wait_scan.ko",
+      "target": "lib/modules/scsi_wait_scan.ko",
+      "sha256": "5d787a301fc4e96a93a94cc1fdddaf2a0cad046aaa3292de3c50298162dc4f04",
+      "bytes": 2304
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/sec.ko",
+      "target": "lib/modules/sec.ko",
+      "sha256": "fd5874dbbc33b7d24c37cad5effcbea2f28f90d5ebd9496b479ae6fcfc1dcf1b",
+      "bytes": 95880
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/vcodec_kernel_driver.ko",
+      "target": "lib/modules/vcodec_kernel_driver.ko",
+      "sha256": "2e404941aafc2b31b4b4a056e2c8ec9623c71ef6db03ea53ba69fa2e88383b10",
+      "bytes": 42460
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/wlan_mt6628.ko",
+      "target": "lib/modules/wlan_mt6628.ko",
+      "sha256": "f853b3c92e654d58bf7bb57a01310e74cbf94464c9a13fd2e24105ef3dd2b834",
+      "bytes": 819932
+    },
+    {
+      "source": "stock",
+      "path": "lib/modules/wlan_mt6628.ko",
+      "target": "lib/modules/wlan.ko",
+      "sha256": "f853b3c92e654d58bf7bb57a01310e74cbf94464c9a13fd2e24105ef3dd2b834",
+      "bytes": 819932
+    },
+    {
+      "source": "stock",
+      "path": "vendor/bin/pvrsrvctl",
+      "target": "vendor/bin/pvrsrvctl",
+      "sha256": "00c7daada977858a78c156227fd2d00aa1ff024c2db4726358f8ad483dbbad87",
+      "bytes": 5364
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/egl/libEGL_mtk.so",
+      "target": "vendor/lib/egl/libEGL_mtk.so",
+      "sha256": "e7f90bc62e49d3cb3ab861927429ed87782fd57c32a974a1286c9d8e53bfe59c",
+      "bytes": 9220
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/egl/libGLESv1_CM_mtk.so",
+      "target": "vendor/lib/egl/libGLESv1_CM_mtk.so",
+      "sha256": "4f740bbb562399f439467f49a54c89f2ac60f34305ebab4ffd55ac39e50f98f7",
+      "bytes": 492824
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/egl/libGLESv2_mtk.so",
+      "target": "vendor/lib/egl/libGLESv2_mtk.so",
+      "sha256": "8c2e51621dd7e6c41e46bab9fc64e5434253bf567f74628a411526320634314e",
+      "bytes": 427284
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/hw/gralloc.mt8389.so",
+      "target": "vendor/lib/hw/gralloc.mt6589.so",
+      "sha256": "7f4f998f64ee17427ec6ebf30cb36bf6b1ea63d80893075b0898057e6d182bac",
+      "bytes": 39004
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/hw/gralloc.mt8389.so",
+      "target": "vendor/lib/hw/gralloc.mt8389.so",
+      "sha256": "7f4f998f64ee17427ec6ebf30cb36bf6b1ea63d80893075b0898057e6d182bac",
+      "bytes": 39004
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/libglslcompiler.so",
+      "target": "vendor/lib/libglslcompiler.so",
+      "sha256": "73c2fd6e860a41dd44cfc949e39404ece43b6281a40fca51d3f633e953488108",
+      "bytes": 263332
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/libIMGegl.so",
+      "target": "vendor/lib/libIMGegl.so",
+      "sha256": "8d0d7fadd172e424730fe1fc3756f6924093b1a79e1aad12109d3851b6ab1def",
+      "bytes": 75024
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/libpvr2d.so",
+      "target": "vendor/lib/libpvr2d.so",
+      "sha256": "58c85c53d4b822990e958a054af9fb268896c742d3908d34ebf304cf9d4948d6",
+      "bytes": 25652
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/libpvrANDROID_WSEGL.so",
+      "target": "vendor/lib/libpvrANDROID_WSEGL.so",
+      "sha256": "7126a0f02fa967893ddcf3f975c6e8b3e376b9daac1e94a8a53ab49ead6a4f5b",
+      "bytes": 13520
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/libPVRScopeServices.so",
+      "target": "vendor/lib/libPVRScopeServices.so",
+      "sha256": "bbb4dcc1e3d659f9a0b0a62795f2db2ce9c4a3f7037d4ac659de13a6cc72183f",
+      "bytes": 9276
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/libsrv_init.so",
+      "target": "vendor/lib/libsrv_init.so",
+      "sha256": "e3003b44774b3ae5b880e7d697fad31d28886223ec00b07584d560aae2b04fa0",
+      "bytes": 100088
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/libsrv_um.so",
+      "target": "vendor/lib/libsrv_um.so",
+      "sha256": "d041b49874954f2c2442325b34f222768971a09f0703827ef5b5bbcff46a4f2c",
+      "bytes": 226468
+    },
+    {
+      "source": "stock",
+      "path": "vendor/lib/libusc.so",
+      "target": "vendor/lib/libusc.so",
+      "sha256": "34164f08e4a1dda85e5c7414fb6717bfa2b9e0815fbc6dba358422f4735084f5",
+      "bytes": 1287380
+    }
+  ]
+}

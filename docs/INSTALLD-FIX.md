@@ -10,7 +10,8 @@ The logged `Failed before getfilecon` is consistent with this exact source path.
 
 ## Minimal patch
 
-File: `b8000-installd-no-selinux.patch`. Apply with `patch -p1` from `frameworks/native`.
+File: `patches/installd-no-selinux.patch`. The contributor source-build helper
+applies it from `frameworks/native` using `git apply` and builds the result.
 
 Only two files change:
 

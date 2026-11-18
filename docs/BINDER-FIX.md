@@ -18,16 +18,12 @@ At Image offset0x31da94, VA c0325a94 replace e5943000 with eaffffeb: uncondition
 
 Only that loop's priority inheritance and monitor diagnostic are skipped; other Binder RT code remains. Callback semantics follow the existing generic wake loop for ordinary task and epoll callback entries. This is a targeted experimental kernel fix, not a general kernel modernization or completed ROM claim.
 
-Files:
-- stock-crash-disassembly.txt: exact offline instructions around fault and callback target.
-- stock-binder.c/.h, stock-eventpoll.c, stock-wait.h: public original-family source evidence.
-- stock-decompress_inflate.c: original gzip decoder; lines103-118 support FNAME.
-- stock-compressed-head.S473: reads input_data_end-4 for inflated size.
-- propose-patch.mjs: verifies original three instructions and produces audit-only Image copy.
-- proposed-kernel.gnu.gz: GNU gzip -n -9 output from that Image.
-- build-candidate.mjs: verifies stock/current payload equality and creates isolated exact-size payload.
-- candidate-kernel.payload: includes original MTK512B header and ARM zImage wrapper; NOT a boot.img.
-- candidate-manifest.json: hashes, sizes, offsets, CRC and verification results.
+The portable reconstruction is now implemented in `scripts/kernel.py`; it reads
+an explicitly supplied original boot image and writes a locally generated kernel
+payload. `scripts/boot.py` packages that payload with the contributor-built init
+and device rules. The binary input/output and original private inspection artifacts
+are deliberately not tracked. See SOURCES.md for the public source investigation
+links and BUILDING.md for commands.
 
 ## Recompression boundary proof
 

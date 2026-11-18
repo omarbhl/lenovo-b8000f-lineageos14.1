@@ -28,11 +28,12 @@ The inspected devinfo module initialization only registers the major-196 charact
 
 Use a valid `""` options string in any custom syscall helper. Do not treat failed finit_module calls as successful or silently ignore non-ENOSYS errors.
 
-## Optional alternative patch
+## Build configuration
 
-`b8000-insmod-enosys-fallback.patch` adds an ENOSYS-only fallback using the already-open O_NOFOLLOW file descriptor. It is compiled only under the explicit `B8000_LEGACY_NO_SELINUX` target macro, retains normal finit_module behavior otherwise, and passes a non-null options string. It depends on the earlier `legacy_no_selinux.h` helper.
-
-This optional patch dry-runs against the active source but was not compiled or executed here. The existing BoardConfig option is simpler and recommended for this known stock kernel.
+The contributor workflow uses the existing BoardConfig option in
+`device/lenovo/b8000_init/BoardConfig.mk`. No alternative module-loader patch is
+needed or applied. `scripts/build_components.sh` installs that configuration when
+building init. Module bytes come from the hash-locked original firmware inputs.
 
 Other loader controls: the acquired stock `/system/xbin/busybox insmod` is a useful old-environment control. Its invocation name must remain `busybox` for applet dispatch. The original stock toolbox is another possible control; neither a new driver nor forced module loading is justified merely by the modern loader's argument error.
 
