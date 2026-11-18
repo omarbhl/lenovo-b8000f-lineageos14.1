@@ -1,0 +1,11 @@
+FLASH AT YOUR OWN RISK
+
+This experimental ROM is provided AS IS, without warranty or guarantee of any kind.
+Flashing or using it may brick or damage your device, erase data, or disable functions.
+You choose to install it and accept these risks. The author, maintainer and
+contributors are not responsible for device damage, data loss, or other losses
+arising from installation or use, to the fullest extent permitted by applicable law.
+
+Back up your data and keep working recovery/rollback files before flashing.
+No compatibility, reliability, availability or security guarantee is made.
+Lenovo B8000-F Wi-Fi only. This is not an official Lenovo or LineageOS release.

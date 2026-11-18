@@ -27,6 +27,16 @@ clean userdata. Existing user data can retain prior development settings.
 
 ## Downloads and installation
 
+### Use at your own risk
+
+This software is provided **AS IS**, without warranty or guarantee of any kind.
+Flashing or using it may damage or brick your device, erase data, or cause loss
+of functionality. You choose to install it and accept these risks. **The author,
+maintainer and contributors are not responsible for device damage, data loss,
+or other losses arising from its installation or use, to the fullest extent
+permitted by applicable law.** Back up your data and keep recovery/rollback files
+before flashing. No compatibility, reliability or security guarantee is made.
+
 Firmware belongs in **GitHub Releases**, not Git history. While this repository
 is private, v0.2 is kept as a draft release for the owner's validation. Do not
 publish or mirror it until the source/license and testing gates are resolved.

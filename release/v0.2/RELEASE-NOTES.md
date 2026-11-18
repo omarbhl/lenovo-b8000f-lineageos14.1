@@ -1,5 +1,11 @@
 # v0.2 experimental — private validation draft
 
+**FLASH AT YOUR OWN RISK.** Provided AS IS with no warranty or guarantee. You
+accept the risk of device damage/bricking, data loss and loss of functionality.
+The author, maintainer and contributors are not responsible for damage or losses
+arising from installation/use, to the fullest extent permitted by applicable law.
+Back up first and keep recovery/rollback files.
+
 Includes the confirmed panel/touch alignment, automatic sensor rotation, matched
 Lenovo camera hardware/capture stack, camera mounting orientation wrappers,
 persistent capture permissions, legacy startup/module/app-data compatibility,

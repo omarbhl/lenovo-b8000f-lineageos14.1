@@ -1,5 +1,12 @@
 # Lenovo B8000-F Android 7.1.2 v0.2 experimental
 
+**Flash at your own risk.** This software is provided AS IS, without warranty
+or guarantee. Installation/use may brick or damage the tablet, erase data, or
+disable functions. The author, maintainer and contributors are not responsible
+for device damage, data loss or other losses arising from installation/use, to
+the fullest extent permitted by applicable law. You accept these risks and must
+back up your data before flashing.
+
 For Lenovo B8000-F Wi-Fi only. This is a donor-based LineageOS 14.1 port with
 source-built compatibility components and a patched original kernel. It is not
 a production-secure Android release. Security patch property remains the donor's
