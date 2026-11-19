@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "zipSha256": "8698b1ff0fc84dc61fbe9a8a5fd94f900524f83c244d8f540835547ee36c70f4",
+  "zipBytes": 451022769,
+  "basePackageSha256": "3af7da4ff9c664e20957799ce7907239e8a6ca3ed478d10c41a1f34768670698",
+  "images": {
+    "boot.img": "1da5554bed10363dd2a025c028039df84653d728ea771caacd50e979e3c4f65c",
+    "system.img": "94ff67cb5a65b3c45418b81d2957e938a3755850efce16c86aefd275c067ae70"
+  },
+  "firmwareImagesUnchanged": true,
+  "installerUnchanged": true,
+  "sameReleaseSigningIdentity": true,
+  "signatureVerified": true,
+  "zipCrcVerified": true,
+  "explicitMemberAllowlist": true,
+  "curatedSourceFiles": 48,
+  "privateDeviceBackupsIncluded": false,
+  "settingsColors": "original; preview reverted",
+  "sdCard": "known boot blocker; remove card",
+  "recoveryInstallTested": false
+}

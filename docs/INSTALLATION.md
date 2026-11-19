@@ -1,4 +1,8 @@
-# Lenovo B8000-F Android 7.1.2 v0.2 experimental
+# Lenovo B8000-F Revival Android 7.1.2 v0.3
+
+**microSD boot blocker: remove the microSD card and keep the slot empty.**
+The current storage service crashes on an unsupported SELinux operation while
+scanning a card. If startup gets stuck with a card inserted, remove the card.
 
 **Flash at your own risk.** This software is provided AS IS, without warranty
 or guarantee. Installation/use may brick or damage the tablet, erase data, or
@@ -17,6 +21,8 @@ The kernel has no SELinux. Do not use this build for sensitive accounts or data.
 
 - Correct panel rotation and matching touchscreen behavior.
 - Sensor frame correction for automatic rotation.
+- Lock-screen rotation (`lockscreen.rot_override=true`) prevents an inverted screen before unlock; included in v0.2.1/v0.3 and contributor builds, but not v0.2.
+- Native About tablet project, maintainer and issues/contributions GitHub entries.
 - Matching Lenovo camera sensor, processing and capture libraries.
 - Correct front/rear camera mounting orientation.
 - Camera capture/flash device permissions that persist across reboots.
@@ -25,10 +31,12 @@ The kernel has no SELinux. Do not use this build for sensitive accounts or data.
 - Open Camera replaces the donor GoogleCamera app with its panorama startup crash.
 - Existing compatible Firefox and NewPipe applications retained.
 
-The individual fixes were installed on one B8000-F; the owner confirmed display,
-touch, auto-rotation, both camera previews and photo saving. The newly assembled
-ZIP still requires recovery reinstall testing. Video, audio, battery lifetime,
-long suspend and broader app compatibility require the supplied manual checklist.
+The individual fixes were installed on one B8000-F; the owner reports successful
+manual hardware checks. The newly packaged ZIP still requires its own recovery
+clean-install/reinstall test. Keep results for this exact ZIP using the supplied
+manual checklist. Original Settings colours are retained; the separately tested
+wallpaper, Google WebView 119 user update and per-user Updater/printing disabling
+are not installed automatically by this ZIP.
 
 ## Installation and reinstall
 
@@ -36,7 +44,7 @@ long suspend and broader app compatibility require the supplied manual checklist
    a working B8000-F recovery and an external copy of the ROM/checksums.
 2. Verify the downloaded ZIP against SHA256SUMS.txt. Use a charged battery and
    stable cable. Enter the B8000-F TWRP recovery used for this project.
-3. Install B8000F-Android7.1.2-v0.2-EXPERIMENTAL.zip. The installer checks the model
+3. Install B8000F-Revival-Android7.1.2-v0.3-EXPERIMENTAL.zip. The installer checks the model
    and writes only system and boot. It does not wipe userdata or write calibration,
    recovery, bootloader, NVRAM or protect partitions.
 4. Existing users can first try a reinstall preserving data. Installing from stock
@@ -48,7 +56,7 @@ long suspend and broader app compatibility require the supplied manual checklist
 An installer failure must be investigated before reboot. The old MTK boot device
 rejects fsync, so this installer stages boot.img in RAM, uses recovery dd, then
 global sync; it checks each return code. This workflow was developed on TWRP2.6.3.0;
-the complete v0.2 ZIP has not yet been installed through recovery.
+the exact v0.3 ZIP has not yet been installed through recovery.
 
 This ZIP uses a project experimental certificate, not an upstream LineageOS key.
 Recovery must trust that certificate to use signature verification; otherwise

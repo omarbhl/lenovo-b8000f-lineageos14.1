@@ -24,6 +24,7 @@ if [ ! -f "$keys/private.pk8" ] || [ ! -f "$keys/certificate.pem" ]; then echo '
 mkdir -p "$work"
 python3 "$root/scripts/prepare_inputs.py" --stock-boot "$stock_boot" --stock-system "$stock_system" --donor-zip "$donor_zip" --work "$work/inputs"
 bash "$root/scripts/build_components.sh" --checkout "$android" --out "$work/components" --jobs "$jobs"
+python3 "$root/scripts/brand_settings.py" --input "$work/inputs/overlay/system/priv-app/Settings/Settings.apk" --output "$work/components/Settings.apk" --signapk "$work/components/signapk.jar" --certificate "$android/build/target/product/security/platform.x509.pem" --key "$android/build/target/product/security/platform.pk8" --java "${JAVA_HOME:-/usr/lib/jvm/java-8-openjdk-amd64}/bin/java"
 python3 "$root/scripts/fetch_apps.py" --output "$work/apps"
 python3 "$root/scripts/build_rom.py" --prepared "$work/inputs" --components "$work/components" --apps "$work/apps" --output "$work/rom" --signapk "$work/components/signapk.jar" --certificate "$keys/certificate.pem" --key "$keys/private.pk8"
 echo "Signed output and checksums: $work/rom"

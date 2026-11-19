@@ -19,6 +19,13 @@
   "overlay": [
     {
       "source": "donor",
+      "path": "priv-app/Settings/Settings.apk",
+      "target": "priv-app/Settings/Settings.apk",
+      "sha256": "ac955bcc5f84311f9557ba5cc4814939049019d15b71d060747a91ae6673d1d3",
+      "bytes": 29986608
+    },
+    {
+      "source": "donor",
       "path": "build.prop",
       "target": "build.prop",
       "sha256": "445a51efa52fa1fd8e35ad27c42434626f28b7fb464e0ff7213907d91e06fc07",

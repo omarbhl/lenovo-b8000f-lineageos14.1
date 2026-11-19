@@ -11,6 +11,8 @@
 *.png
 *.jpg
 *.jpeg
+!assets/revival-logo.png
+!assets/revival-wallpaper.png
 *.mp4
 *.pk8
 *.pem

@@ -119,6 +119,13 @@ python3 scripts/prepare_inputs.py --stock-boot INPUT/stock-boot.img \
 bash scripts/build_components.sh --checkout "$HOME/b8000-android" \
   --out "$HOME/b8000-work/components01" --jobs 4
 python3 scripts/fetch_apps.py --output "$HOME/b8000-work/apps"
+python3 scripts/brand_settings.py \
+  --input "$HOME/b8000-work/inputs01/overlay/system/priv-app/Settings/Settings.apk" \
+  --output "$HOME/b8000-work/components01/Settings.apk" \
+  --signapk "$HOME/b8000-work/components01/signapk.jar" \
+  --certificate "$HOME/b8000-android/build/target/product/security/platform.x509.pem" \
+  --key "$HOME/b8000-android/build/target/product/security/platform.pk8" \
+  --java /usr/lib/jvm/java-8-openjdk-amd64/bin/java
 python3 scripts/build_rom.py --prepared "$HOME/b8000-work/inputs01" \
   --components "$HOME/b8000-work/components01" --apps "$HOME/b8000-work/apps" \
   --output "$HOME/b8000-work/rom01" \
@@ -132,6 +139,16 @@ build; this does not make its ZIP trusted by recovery. Local/cached app files mu
 match config/apps.lock.json. Versions are never substituted automatically.
 
 ## Failures and limitations
+
+The builder adds Revival project, maintainer and clickable source preferences to
+the existing native About tablet screen. `config/branding.json` records the input
+Settings APK and platform certificate hashes. The patch changes only
+`res/xml/device_info_settings.xml`; existing code, other resource payloads and
+resource IDs are preserved and checked. It uses the donor's existing public AOSP
+test platform identity from the pinned Android build tree, which is distinct from
+your private ROM ZIP signing identity. No keys or prebuilt Settings APK are
+tracked. OpenSSL is required for certificate identity checks. Existing LineageOS
+and Android credits/version information remain intact. Boot animation is unchanged.
 
 - Keep original firmware unchanged. Use fresh work directories after failures.
 - prepare-inputs.log identifies hash, resize and hardware extraction errors.

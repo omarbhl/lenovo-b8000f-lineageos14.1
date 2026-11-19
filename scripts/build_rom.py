@@ -37,7 +37,7 @@ def main():
     a.output.mkdir(parents=True,exist_ok=True)
     if any((a.output/n).exists() for n in ['system.img','boot.img','B8000F-contributor-unsigned.zip']):p.error('Use a fresh output directory; existing images will not be overwritten')
     required=[a.prepared/n for n in ['base-system.img','stock-boot.img','donor-boot.img','update-binary']]
-    required += [a.components/n for n in ['init','installd','sensors.default.so','camera.default.so']]
+    required += [a.components/n for n in ['init','installd','sensors.default.so','camera.default.so','Settings.apk']]
     for f in required:
         if not f.is_file():raise SystemExit('Missing required input: '+str(f))
     appinfo=json.loads((ROOT/'config/apps.lock.json').read_text())
@@ -45,7 +45,7 @@ def main():
         if not (a.apps/name).is_file() or sha(a.apps/name)!=info['sha256']:raise SystemExit('App input missing/hash mismatch: '+name)
     system=a.output/'system.img';shutil.copyfile(a.prepared/'base-system.img',system)
     overlay=a.output/'overlay';shutil.copytree(a.prepared/'overlay/system',overlay)
-    extras={'bin/installd':'installd','lib/hw/sensors.default.so':'sensors.default.so','lib/hw/camera.default.so':'camera.default.so'}
+    extras={'bin/installd':'installd','lib/hw/sensors.default.so':'sensors.default.so','lib/hw/camera.default.so':'camera.default.so','priv-app/Settings/Settings.apk':'Settings.apk'}
     for dst,src in extras.items():
         target=overlay/dst;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(a.components/src,target)
     for app in appinfo:
@@ -94,6 +94,9 @@ def main():
         for name in ['boot.img','system.img','build-manifest.json','IMAGE-SHA256SUMS.txt']:z.write(a.output/name,name)
         z.write(ROOT/'DISCLAIMER.txt','DISCLAIMER.txt');z.write(ROOT/'docs/INSTALLATION.md','INSTALLATION.md')
         z.write(ROOT/'docs/MANUAL-TEST-CHECKLIST.md','MANUAL-TEST-CHECKLIST.md')
+        z.write(ROOT/'docs/KNOWN-ISSUES.md','KNOWN-ISSUES.md')
+        z.write(ROOT/'README.md','README.md')
+        for name in ['revival-logo.png','revival-wallpaper.png']:z.write(ROOT/'assets'/name,'assets/'+name)
     if a.signapk:
         signed=a.output/'B8000F-contributor-EXPERIMENTAL.zip'
         host_lib=a.signapk.resolve().parent/'host-lib64'

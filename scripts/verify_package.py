@@ -36,7 +36,10 @@ def main():
     with zipfile.ZipFile(package) as z:
         names=z.namelist();check('no duplicate ZIP entries',len(names)==len(set(names)))
         check('ZIP CRCs',z.testzip() is None)
-        check('only documented ZIP entries',set(names)=={'META-INF/com/google/android/update-binary','META-INF/com/google/android/updater-script','boot.img','system.img','build-manifest.json','IMAGE-SHA256SUMS.txt','DISCLAIMER.txt','INSTALLATION.md','MANUAL-TEST-CHECKLIST.md','META-INF/MANIFEST.MF','META-INF/CERT.SF','META-INF/CERT.RSA','META-INF/com/android/otacert'} if package==signed else set(names)=={'META-INF/com/google/android/update-binary','META-INF/com/google/android/updater-script','boot.img','system.img','build-manifest.json','IMAGE-SHA256SUMS.txt','DISCLAIMER.txt','INSTALLATION.md','MANUAL-TEST-CHECKLIST.md'})
+        allowed_entries={'META-INF/com/google/android/update-binary','META-INF/com/google/android/updater-script','boot.img','system.img','build-manifest.json','IMAGE-SHA256SUMS.txt','DISCLAIMER.txt','INSTALLATION.md','MANUAL-TEST-CHECKLIST.md','KNOWN-ISSUES.md','README.md','assets/revival-logo.png','assets/revival-wallpaper.png'}
+        if package==signed:allowed_entries.update({'META-INF/MANIFEST.MF','META-INF/CERT.SF','META-INF/CERT.RSA','META-INF/com/android/otacert'})
+        check('only documented ZIP entries',set(names)==allowed_entries)
+        check('SD-card warning included','microSD' in z.read('KNOWN-ISSUES.md').decode() and 'SELinux' in z.read('KNOWN-ISSUES.md').decode())
         for n,expected in manifest['images'].items():
             with z.open(n) as f:check(n+' payload SHA256',sha(f)==expected)
             with (root/n).open('rb') as f:check(n+' local SHA256',sha(f)==expected)

@@ -1,4 +1,9 @@
-# B8000-F v0.2 manual release checklist
+# Lenovo B8000-F Revival manual release checklist
+
+**Known SD-card blocker: keep the slot empty for routine testing.** Inserting a
+card currently crashes vold and can block boot because the kernel lacks SELinux.
+SD-card test items remain expected failures until a separate compatibility fix
+is installed; do not check them as passing or format a card as a workaround.
 
 This checklist is for the **Lenovo B8000-F Wi-Fi** experimental Android 7.1.2 port. Do not use it to approve B8000-H, B6000, or other variants.
 
@@ -39,6 +44,7 @@ Keep a failure list. A crash, restart, corrupted photo/file, lost calibration, f
 - [ ] Test two-finger pinch/zoom, scrolling, long press, and dragging for 5 minutes. Test while charging as well.
 - [ ] Enable auto-rotation and turn through all four physical orientations 10 times in Settings, browser, and camera. Rotation follows the right direction and touch remains aligned. If an app intentionally locks an orientation, test another app.
 - [ ] Disable auto-rotation, rotate the tablet, then re-enable it. Locking/unlocking and sleep/wake preserve correct behavior.
+- [ ] In each of the four orientations, lock the tablet, wait 10 seconds, wake it and unlock it five times. The lock screen stays upright without a 180-degree flip on unlock. Repeat in the stand and with auto-rotation disabled; the lock screen must respect rotation lock.
 - [ ] Move brightness from minimum to maximum. Test automatic brightness in a dark and a bright room. No flickering, unintended black screen, or stuck brightness.
 - [ ] Check compass/direction in an appropriate app, if advertised. Do not infer compass correctness from working auto-rotation.
 - [ ] Test the tablet stand/cover in its common positions; opening/closing or moving it should not create unexplained sleep/rotation loops.
